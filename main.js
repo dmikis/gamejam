@@ -30,21 +30,21 @@ define([
         return tilesets.tileproperties[tileGid - tilesets[i - 1].firstgid];
     }
 
-    function getTileByType(level, type) {
+    function getTilesByType(level, type) {
         var tileProps = level.tilesets[0].tileproperties;
-        var tile = Object.keys(tileProps).filter(function (tileId) {
+        return Object.keys(tileProps).filter(function (tileId) {
             return tileProps[tileId] && tileProps[tileId].type === type;
-        })[0];
-
-        return tile && (parseInt(tile, 10));
+        }).map(function (id) {
+            return parseInt(id, 10);
+        });
     }
 
     function tileIsNotWall(layerId, level, x, y) {
-        return level.layers[layerId].data[y * level.width + x] !== getTileByType(level, 'wall') + 1;
+        return getTilesByType(level, 'wall').indexOf(level.layers[layerId].data[y * level.width + x] - 1) === -1;
     }
 
     function setPlayerEntryCoords(player, level) {
-        var entranceTile = getTileByType(level, 'entrance');
+        var entranceTile = getTilesByType(level, 'entrance')[0];
 
         console.log(entranceTile);
 
@@ -181,7 +181,7 @@ define([
                     }
 
                     if (
-                        layers[player.level].getTile(player.x, player.y) === getTileByType(level, 'exit')
+                        layers[player.level].getTile(player.x, player.y) === getTilesByType(level, 'exit')[0]
                     ) {
                         console.log('exit');
                     }
@@ -263,7 +263,7 @@ define([
                         }
 
                         if (
-                            layers[player.level].getTile(player.x, player.y) === getTileByType(level, 'exit')
+                            layers[player.level].getTile(player.x, player.y) === getTilesByType(level, 'exit')[0]
                         ) {
                             console.log('exit');
                         }

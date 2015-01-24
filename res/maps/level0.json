@@ -17,7 +17,7 @@
          "name":"Tile Layer 2",
          "opacity":1,
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":20,
          "x":0,
          "y":0
@@ -28,7 +28,7 @@
          "name":"TARDIS",
          "opacity":1,
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":20,
          "x":0,
          "y":0
@@ -61,6 +61,26 @@
                 {
                  "type":"xray"
                 },
+             "1":
+                {
+                 "type":"wall"
+                },
+             "16":
+                {
+                 "type":"wall"
+                },
+             "17":
+                {
+                 "type":"wall"
+                },
+             "18":
+                {
+                 "type":"wall"
+                },
+             "2":
+                {
+                 "type":"wall"
+                },
              "208":
                 {
                  "type":"exit"
@@ -70,6 +90,38 @@
                  "type":"entrance"
                 },
              "241":
+                {
+                 "type":"wall"
+                },
+             "3":
+                {
+                 "type":"wall"
+                },
+             "32":
+                {
+                 "type":"wall"
+                },
+             "34":
+                {
+                 "type":"wall"
+                },
+             "4":
+                {
+                 "type":"wall"
+                },
+             "5":
+                {
+                 "type":"wall"
+                },
+             "6":
+                {
+                 "type":"wall"
+                },
+             "7":
+                {
+                 "type":"wall"
+                },
+             "8":
                 {
                  "type":"wall"
                 }
