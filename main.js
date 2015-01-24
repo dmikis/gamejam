@@ -15,7 +15,20 @@ define([
     clamp,
     pathResolve
 ) {
-    var levelFile = 'res/maps/dmikis.json';
+    var levelFile = 'res/maps/level0.json';
+
+    function getTileProperties(tilesets, tileGid) {
+        var i = 0;
+
+        while (
+            i < tilesets.length &&
+            tilesets[i].firstgid < tileGid
+        ) {
+            i += 1;
+        }
+
+        return tilesets.tileproperties[tileGid - tilesets[i - 1].firstgid];
+    }
 
     jsonLoad([levelFile]).then(function (res) {
         var level = res[0];
@@ -35,38 +48,37 @@ define([
         })).then(function (imgRes) {
             console.log(imgRes);
             var context = CanvasControl.create('canvas', 640, 480);
-            var map = new TileField(context, 640, 480);
-            map.setup({
-                layout: level.layers[0].data.map(function (i) { return i - 1; }),
-                graphics: imgRes[0].files,
-                graphicsDictionary: imgRes[0].dictionary,
-                tileWidth: level.tilewidth,
-                tileHeight: level.tileheight,
-                width: level.layers[0].width,
-                height: level.layers[0].height,
-                isometric: false
+            var layers = level.layers.map(function (layer) {
+                if (layer.type == "objectgroup") {
+                    return {
+                        getType: function () {
+                            return "objectgroup";
+                        },
+
+                        objects: layer.objects
+                    };
+                }
+
+                var l = new TileField(context, 640, 480);
+                l.setup({
+                    layout: layer.data && layer.data.map(function (i) { return i - 1; }),
+                    graphics: imgRes[0].files,
+                    graphicsDictionary: imgRes[0].dictionary,
+                    tileWidth: level.tilewidth,
+                    tileHeight: level.tileheight,
+                    width: layer.width,
+                    height: layer.height,
+                    type: layer.type
+                });
+
+                l.flip("horizontal");
+                l.rotate("left");
+
+                l.align("h-center", CanvasControl().width, layer.width, 0);
+                l.align("v-center", CanvasControl().height, layer.height, 0);
+
+                return l;
             });
-            var objects = new TileField(context, 640, 480);
-            objects.setup({
-                layout: level.layers[0].data.map(function () { return 15 }),
-                tileWidth: level.tilewidth,
-                tileHeight: level.tileheight,
-                width: level.layers[0].width,
-                height: level.layers[0].height,
-                isometric: false
-            });
-
-            map.flip("horizontal");
-            map.rotate("left");
-
-            map.align("h-center", CanvasControl().width, 16, 0);
-            map.align("v-center", CanvasControl().height, 16, 0);
-
-            objects.flip("horizontal");
-            objects.rotate("left");
-
-            objects.align("h-center", CanvasControl().width, 16, 0);
-            objects.align("v-center", CanvasControl().height, 16, 0);
 
             var player = {
                 x: 1,
@@ -77,13 +89,19 @@ define([
             function render() {
                 context.clearRect(0, 0, 640, 480);
 
-                for (var x = 0; x < level.width; ++x) {
-                    for (var y = 0; y < level.height; ++y) {
-                        map.draw(x, y);
+                layers.forEach(function (layer, i) {
+                    if (i === 1) {
+                        var pc = layers[0].getTilePos(player.x, player.y);
+                        context.drawImage(player.img, pc.x, pc.y);
                     }
-                }
-
-                objects.draw(player.x, player.y, player.img);
+                    if (layer.getType() !== 'objectgroup') {
+                        for (var x = 0; x < level.width; ++x) {
+                            for (var y = 0; y < level.height; ++y) {
+                                layer.draw(x, y);
+                            }
+                        }
+                    }
+                });
 
                 requestAnimationFrame(render);
             }
