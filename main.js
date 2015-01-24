@@ -2,7 +2,7 @@ define([
     'jsiso/canvas/Control',
     'jsiso/json/load',
     'jsiso/img/load',
-    'jsiso/tile/field'
+    'jsiso/tile/Field'
 ], function (
     CanvasControl,
     jsonLoad,
