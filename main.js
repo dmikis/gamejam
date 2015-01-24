@@ -5,7 +5,8 @@ define([
     'jsiso/img/load',
     'jsiso/tile/Field',
     'util/clamp',
-    'util/pathResolve'
+    'util/pathResolve',
+    'chiptune2/chiptune2'
 ], function (
     CanvasControl,
     InputControl,
@@ -16,7 +17,22 @@ define([
     pathResolve
 ) {
     var levelFile = 'res/maps/level0.json';
-
+    
+    var modPlayer;
+    
+    function loopPlayer() {
+        if (!modPlayer) {
+            modPlayer = new ChiptuneJsPlayer(new ChiptuneJsConfig(1));
+        }
+        modPlayer.load('res/music/theme.xm', function(buffer){
+            modPlayer.play(buffer);
+            modPlayer.togglePause(buffer);
+            
+            setTimeout(loopPlayer, 1000 * modPlayer.duration());
+            modPlayer.play(buffer);
+        });
+    }
+    
     function getTileProperties(tilesets, tileGid) {
         var i = 0;
 
@@ -284,6 +300,7 @@ define([
             }
 
             render();
+            loopPlayer();
         });
     });
 });
