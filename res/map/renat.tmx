@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="staggered" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="8" staggeraxis="y" staggerindex="odd" nextobjectid="12">
+ <tileset firstgid="1" name="tiles" tilewidth="16" tileheight="8">
+  <image source="tileset.png" width="160" height="80"/>
+  <terraintypes>
+   <terrain name="ground" tile="-1"/>
+  </terraintypes>
+ </tileset>
+ <layer name="Слой тайлов 1" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJztmuGKKyEMRp3+nfb9X/dSWMENJiZGZ71wDkgXbcvynUYdZ0oBAAAAAAAP92D8euS/gMpd+k4u8Qo5tJzle9rXlqtpkOcuYyf4eIa75Hy0HnCSJ+pD/n0pDebAx1ns9IGXGNKF5kP242MP0oPmxOrTfDBvxZH5Ux9/y6yPtg8f67B+957+0TyFjxz4OAt8nAU+ziLiw7PPxUcOfJwFPs5ipQ+uz/N4fHjPSfCRx+vj25iv9qOdi/QaPtbTO8/V8p/xAX68ucuzeM/6AXNEnETqA+KM5qleHz72Mbtu4GMP7Tows4bgYy29dbnNWvPyKmMvEKOX47fvXewaeZXfPqiPPDV7a76xXMhxfMzT5h3x8RKfw8ca2rw/xXbyKr9rAh9rkb//kY/3T2vXjNqPjzzaPqq3r5I+otchMMZaq1efm8AYfJzDaC+Lj2fZ6aPnBGw8Pj7G2Ldp1+7URxyvD8tJ3W9RH3lGPj7F9nH9jPX2vtRHnIgPLfM6zvV5jtHZVOuinpPI8bY+8JHHWx/1uvxT+j6ojzyj+mh9SBf4WI/HR82952O0frC/iuH1YbW2Rthf5Vjh4x58Hh9+VvrwuMCHzSofntrBx5jdPqiPGBEfo+d9qI88Xh/1WpD62EvUh3amaJ394sOPx0c9S7f2UNz/WEPUR+98N3LvAx82kbmq5yPqAh820fWj98w0PtaR8fEuen1oLvBhI7PSnjes42/xfnysZYUP5qp1aLl5nUR94MQm4qPeH7fWDVzksLLrzV3SSdQHTmxmfWhzFS5yRH3IzKM+cGIz46PmPuMCHzae/DxOXs7vKgUvFjM+ZJ/XResD+nhz1GoEH2vx5qg5ibjAx5hIltXJzLrBeu5jxkd0P4UPPzN5Zp2ATsYHLtYzO+cwX+3haR9gM+uD2tgDPs4CH2eBj7N42gdObHBxHvg4h0yuZL0efudnQbYAAAD/P/8A4GgpIQ==
+  </data>
+ </layer>
+ <layer name="Слой тайлов 2" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt2uFqwjAUgNHCnL9k8/2fdggrdKG2t01uzLZzoAwVhvTjNo06TfVuO8fb4iDXkRZ65Iv0KB+TR4+xRK9X5WPaO7p2WEdyHe1hPnJF147yenV7xZv9B/Z6rK3n80F7Z1vokSMyH3r0cbaD9SOHHmPRYyx6jOVsCz1y6DGWmh4+M2mvtsc06dLK2bV8brKkRxs1TUqa1Dvb4n3lf+lRp2Y21npQp6bF5wve71+nx1j27p+evaZFjsgeY+15a0eO6J5va99BG5H93rMe5qO9mh60Zz7GEm3hN6J91PQwH+1Felwm89HLkfkof7NrPnJEe1yKx+Q4sn74jjbfkR5mJN+zHvO5LxssD2tIe2WDrfPvetXH2rUq0sV8tHedYve6ZR8t8pRNtjose/hOqr379LNHdO3QIs+ySeS+yvUq19wjsm64t+pjq4n56G+vh715f0dmxHzke/SIrB3mo595PtxfjSF6vaKP8pplPl6rnI9LcWjR33INKc/9dfLZVU/zPe/c4aM4HrTo6/7993H+y3N/X3mOXM458NvZB47DvhwAAAAAAAAAAAAAAAAAANjyBXgBG5o=
+  </data>
+ </layer>
+ <objectgroup name="Слой объектов 1">
+  <object id="7" gid="7" x="312" y="188"/>
+  <object id="8" gid="7" x="304" y="184"/>
+  <object id="9" gid="7" x="296" y="180"/>
+  <object id="10" gid="7" x="296" y="188"/>
+  <object id="11" gid="7" x="296" y="188"/>
+ </objectgroup>
+</map>
