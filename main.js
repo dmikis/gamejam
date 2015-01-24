@@ -30,6 +30,15 @@ define([
         return tilesets.tileproperties[tileGid - tilesets[i - 1].firstgid];
     }
 
+    function setPlayerEntryCoords(player, level) {
+        var entry = level.layers[1].objects.filter(function (obj) {
+            return obj.name === 'Entry';
+        })[0];
+
+        player.x = ((entry.x + 0.5 * entry.width) / level.tileheight) | 0
+        player.y = ((entry.y + 0.5 * entry.height) / level.tileheight) | 0
+    }
+
     jsonLoad([levelFile]).then(function (res) {
         var level = res[0];
 
@@ -85,6 +94,8 @@ define([
                 y: 1,
                 img: imgRes[1].files['player.png']
             };
+
+            setPlayerEntryCoords(player, level);
 
             function render() {
                 context.clearRect(0, 0, 640, 480);
