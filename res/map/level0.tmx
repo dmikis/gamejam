@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="isometric" renderorder="right-down" width="20" height="20" tilewidth="32" tileheight="16" nextobjectid="1">
+ <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="16">
+  <image source="tileset.png" width="512" height="256"/>
+ </tileset>
+ <layer name="Слой тайлов 1" width="20" height="20">
+  <data encoding="base64" compression="zlib">
+   eJz7yMDA8HEI4E9UwsjmUcNNo+aNmkcL8/Cl29H0PGoeNcyjBgYAz2h46w==
+  </data>
+ </layer>
+ <layer name="Слой тайлов 2" width="20" height="20">
+  <data encoding="base64" compression="zlib">
+   eJzt090KgDAIBeDTD1Hv/8J1kWCmeAyhLhocGDK/gWNA/xqaMitvPLKdYfttz6o82SM4791lezJP17zZVL0sb3kL7nPzMuH6ppH3xMw8z5Rer854FZP1ItPWKx6zfu/bXkfEY/8W8/d2QyAEFg==
+  </data>
+ </layer>
+</map>
