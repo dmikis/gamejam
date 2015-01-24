@@ -30,24 +30,30 @@ define([
         return tilesets.tileproperties[tileGid - tilesets[i - 1].firstgid];
     }
 
-    function setPlayerEntryCoords(player, level) {
-        var entry = level.layers[level.layers.length - 1].objects.filter(function (obj) {
-            return obj.name === 'Entry';
+    function getTileByType(level, type) {
+        var tileProps = level.tilesets[0].tileproperties;
+        var tile = Object.keys(tileProps).filter(function (tileId) {
+            return tileProps[tileId] && tileProps[tileId].type === type;
         })[0];
 
-        player.x = ((entry.x + 0.5 * entry.width) / level.tileheight) | 0
-        player.y = ((entry.y + 0.5 * entry.height) / level.tileheight) | 0
+        return tile && (parseInt(tile, 10));
     }
 
-    function getExitCoords(level) {
-        var exit = level.layers[level.layers.length - 1].objects.filter(function (obj) {
-            return obj.name === 'Exit';
-        })[0];
+    function tileIsNotWall(layerId, level, x, y) {
+        return level.layers[layerId].data[y * level.width + x] !== getTileByType(level, 'wall') + 1;
+    }
 
-        return {
-            x: ((exit.x + 0.5 * exit.width) / level.tileheight) | 0,
-            y: ((exit.y + 0.5 * exit.height) / level.tileheight) | 0
-        };
+    function setPlayerEntryCoords(player, level) {
+        var entranceTile = getTileByType(level, 'entrance');
+
+        console.log(entranceTile);
+
+        var entranceTileIdx = level.layers[0].data.indexOf(entranceTile + 1);
+
+        console.log(entranceTileIdx);
+
+        player.x = entranceTileIdx % level.width;
+        player.y = (entranceTileIdx / level.width) | 0;
     }
 
     jsonLoad([levelFile]).then(function (res) {
@@ -69,19 +75,9 @@ define([
             console.log(imgRes);
             var context = CanvasControl.create('canvas', 640, 480);
             var layers = level.layers.map(function (layer) {
-                if (layer.type == "objectgroup") {
-                    return {
-                        getType: function () {
-                            return "objectgroup";
-                        },
-
-                        objects: layer.objects
-                    };
-                }
-
                 var l = new TileField(context, 640, 480);
                 l.setup({
-                    layout: layer.data && layer.data.map(function (i) { return i - 1; }),
+                    layout: layer.data.map(function (i) { return i - 1; }),
                     graphics: imgRes[0].files,
                     graphicsDictionary: imgRes[0].dictionary,
                     tileWidth: level.tilewidth,
@@ -116,11 +112,10 @@ define([
                         var pc = layers[0].getTilePos(player.x, player.y);
                         context.drawImage(player.img, pc.x, pc.y);
                     }
-                    if (layer.getType() !== 'objectgroup') {
-                        for (var x = 0; x < level.width; ++x) {
-                            for (var y = 0; y < level.height; ++y) {
-                                layer.draw(x, y);
-                            }
+                    if (i >= 1) return;
+                    for (var x = 0; x < level.width; ++x) {
+                        for (var y = 0; y < level.height; ++y) {
+                            layer.draw(x, y);
                         }
                     }
                 });
@@ -134,25 +129,25 @@ define([
                 if (!pressed) {
                     switch (key) {
                         case 38: // arrow up
-                            console.log('up');
-                            player.y = clamp(player.y - 1, 0, level.height - 1);
+                            if (tileIsNotWall(0, level, player.x, clamp(player.y - 1, 0, level.height - 1))) {
+                                player.y = clamp(player.y - 1, 0, level.height - 1);
+                            }
                             break;
                         case 40: // arrow down
-                            console.log('down');
-                            player.y = clamp(player.y + 1, 0, level.height - 1);
+                            if (tileIsNotWall(0, level, player.x, clamp(player.y + 1, 0, level.height - 1))) {
+                                player.y = clamp(player.y + 1, 0, level.height - 1);
+                            }
                             break;
                         case 37: // arrow left
-                            console.log('left');
-                            player.x = clamp(player.x - 1, 0, level.width - 1);
+                            if (tileIsNotWall(0, level, clamp(player.x - 1, 0, level.width - 1), player.y)) {
+                                player.x = clamp(player.x - 1, 0, level.width - 1);
+                            }
                             break;
                         case 39: // arrow right
-                            console.log('right');
-                            player.x = clamp(player.x + 1, 0, level.width - 1);
+                            if (tileIsNotWall(0, level, clamp(player.x + 1, 0, level.width - 1), player.y)) {
+                                player.x = clamp(player.x + 1, 0, level.width - 1);
+                            }
                             break;
-                    }
-                    var exit = getExitCoords(level);
-                    if (exit.x === player.x && exit.y == player.y) {
-                        console.log('Exit!');
                     }
                 }
             });
