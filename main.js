@@ -21,7 +21,9 @@ define([
     var modPlayer;
     
     function loopPlayer() {
-        if (!modPlayer) {
+        if (modPlayer) {
+            modPlayer.stop();
+        } else {
             modPlayer = new ChiptuneJsPlayer(new ChiptuneJsConfig(1));
         }
         modPlayer.load('res/music/theme.xm', function(buffer){
