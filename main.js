@@ -17,9 +17,9 @@ define([
     pathResolve
 ) {
     var levelFile = 'res/maps/level0.json';
-    
+
     var modPlayer;
-    
+
     function loopPlayer() {
         if (modPlayer) {
             modPlayer.stop();
@@ -29,12 +29,12 @@ define([
         modPlayer.load('res/music/theme.xm', function(buffer){
             modPlayer.play(buffer);
             modPlayer.togglePause(buffer);
-            
+
             setTimeout(loopPlayer, 1000 * modPlayer.duration());
             modPlayer.play(buffer);
         });
     }
-    
+
     function getTileProperties(tilesets, tileGid) {
         var i = 0;
 
@@ -184,7 +184,11 @@ define([
                             nextX = clamp(player.x + 1, 0, level.width - 1);
                             break;
                         case 32: // space
-                            if (layers[player.level + 1] && layers[player.level + 1].getTile(nextX, nextY) >= 0) {
+                            if (
+                                layers[player.level + 1] &&
+                                layers[player.level + 1].getTile(nextX, nextY) >= 0 &&
+                                tileIsNotWall(player.level + 1, level, nextX, nextY)
+                            ) {
                                 player.level += 1;
                             }
                             break;
@@ -218,7 +222,11 @@ define([
                         if (f) return;
                         switch ((true)) {
                             case gamepad.buttons[0].pressed:
-                                if (layers[player.level + 1] && layers[player.level + 1].getTile(nextX, nextY) >= 0) {
+                                if (
+                                    layers[player.level + 1] &&
+                                    layers[player.level + 1].getTile(nextX, nextY) >= 0 &&
+                                    tileIsNotWall(player.level + 1, level, nextX, nextY)
+                                ) {
                                     player.level += 1;
                                 }
                                 break;
