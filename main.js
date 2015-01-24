@@ -31,12 +31,23 @@ define([
     }
 
     function setPlayerEntryCoords(player, level) {
-        var entry = level.layers[1].objects.filter(function (obj) {
+        var entry = level.layers[level.layers.length - 1].objects.filter(function (obj) {
             return obj.name === 'Entry';
         })[0];
 
         player.x = ((entry.x + 0.5 * entry.width) / level.tileheight) | 0
         player.y = ((entry.y + 0.5 * entry.height) / level.tileheight) | 0
+    }
+
+    function getExitCoords(level) {
+        var exit = level.layers[level.layers.length - 1].objects.filter(function (obj) {
+            return obj.name === 'Exit';
+        })[0];
+
+        return {
+            x: ((exit.x + 0.5 * exit.width) / level.tileheight) | 0,
+            y: ((exit.y + 0.5 * exit.height) / level.tileheight) | 0
+        };
     }
 
     jsonLoad([levelFile]).then(function (res) {
@@ -124,20 +135,24 @@ define([
                     switch (key) {
                         case 38: // arrow up
                             console.log('up');
-                            player.y = clamp(player.y - 1, 0, 15);
+                            player.y = clamp(player.y - 1, 0, level.height - 1);
                             break;
                         case 40: // arrow down
                             console.log('down');
-                            player.y = clamp(player.y + 1, 0, 15);
+                            player.y = clamp(player.y + 1, 0, level.height - 1);
                             break;
                         case 37: // arrow left
                             console.log('left');
-                            player.x = clamp(player.x - 1, 0, 15);
+                            player.x = clamp(player.x - 1, 0, level.width - 1);
                             break;
                         case 39: // arrow right
                             console.log('right');
-                            player.x = clamp(player.x + 1, 0, 15);
+                            player.x = clamp(player.x + 1, 0, level.width - 1);
                             break;
+                    }
+                    var exit = getExitCoords(level);
+                    if (exit.x === player.x && exit.y == player.y) {
+                        console.log('Exit!');
                     }
                 }
             });
