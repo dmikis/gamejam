@@ -25,15 +25,15 @@
  </tileset>
  <layer name="Tile Layer 1" width="20" height="20">
   <data encoding="base64" compression="zlib">
-   eJz7yMDA8HEI4E9UwsjmkeuWh1jMoMQ8bGaMmjf0zaMk/eHSN5j9O2re0DKPGhgAgnx43A==
+   eJz7yMDA8HEI4E9UwujmkeOWh0hmfMTCpsSPo+YNH/MIpT9S9A4F/46aN7TMowYGAIfAeN0=
   </data>
  </layer>
- <layer name="Tile Layer 2" width="20" height="20">
+ <layer name="Tile Layer 2" width="20" height="20" visible="0">
   <data encoding="base64" compression="zlib">
    eJzt09EKgCAMBdCZEvX/X9YfqQ+DcVt4F0Y9NLgvzh1koMgzlSakGOtoWVr2wLze15nNeL2X4a32vp1LMC+Ohz088/YS9UZ5y1vlvDcvfd+F8O6YI88zddY7Z7yIyXpXJlbEY+r3vu3NiHrs32L+XgVO9ATC
   </data>
  </layer>
- <layer name="TARDIS" width="20" height="20">
+ <layer name="TARDIS" width="20" height="20" visible="0">
   <data encoding="base64" compression="zlib">
    eJyLYKA+yKCBmRU0MHMUjIJRMApGAfkAADPJATk=
   </data>

@@ -112,10 +112,19 @@ define([
                         var pc = layers[0].getTilePos(player.x, player.y);
                         context.drawImage(player.img, pc.x, pc.y);
                     }
-                    if (i >= 1) return;
                     for (var x = 0; x < level.width; ++x) {
                         for (var y = 0; y < level.height; ++y) {
+                            if (i >= 1 && layer.getTile(player.x, player.y) >= 0) {
+                                if (x === player.x && y === player.y) {
+                                    context.globalAlpha = 0.1;
+                                } else if (Math.abs(x - player.x) + Math.abs(y - player.y) === 1) {
+                                    context.globalAlpha = 0.3;
+                                } else if (Math.abs(x - player.x) === 1 && Math.abs(y - player.y) === 1) {
+                                    context.globalAlpha = 0.5;
+                                }
+                            }
                             layer.draw(x, y);
+                            context.globalAlpha = 1;
                         }
                     }
                 });
