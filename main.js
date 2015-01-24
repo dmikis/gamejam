@@ -9,7 +9,7 @@ define([
     imgLoad,
     TileField
 ) {
-    jsonLoad(['untitled.json']).then(function (res) {
+    jsonLoad(['res/map/renat.json']).then(function (res) {
         var level = res[0];
         imgLoad(level.tilesets.map(function (tileset) {
             return {
@@ -26,11 +26,11 @@ define([
                 layout: level.layers[0].data.map(function (i) { return i - 1; }),
                 graphics: imgRes[0].files,
                 graphicsDictionary: imgRes[0].dictionary,
-                tileWidth: 32,
-                tileHeight: 32,
+                tileWidth: 16,
+                tileHeight: 8,
                 width: level.layers[0].width,
                 height: level.layers[0].height,
-                isometric: false
+                isometric: true
             });
 
             map.flip("horizontal");
