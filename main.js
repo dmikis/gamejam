@@ -70,7 +70,7 @@ define([
                 }
             };
         }).concat({
-            graphics: ['res/player.png']
+            graphics: ['res/player-top.png', 'res/player-base.png', 'res/player-left.png', 'res/player-right.png']
         })).then(function (imgRes) {
             console.log(imgRes);
             var context = CanvasControl.create('canvas', 640, 480);
@@ -99,7 +99,7 @@ define([
             var player = {
                 x: 1,
                 y: 1,
-                img: imgRes[1].files['player.png']
+                imgs: [imgRes[1].files['player-base.png'], imgRes[1].files['player-top.png'], imgRes[1].files['player-left.png'], imgRes[1].files['player-right.png']]
             };
 
             setPlayerEntryCoords(player, level);
@@ -110,7 +110,10 @@ define([
                 layers.forEach(function (layer, i) {
                     if (i === 1) {
                         var pc = layers[0].getTilePos(player.x, player.y);
-                        context.drawImage(player.img, pc.x, pc.y);
+                        context.drawImage(player.imgs[0], pc.x, pc.y);
+                        context.drawImage(player.imgs[1], pc.x, pc.y - 16);
+                        context.drawImage(player.imgs[2], pc.x - 16, pc.y - 8);
+                        context.drawImage(player.imgs[3], pc.x + 16, pc.y - 8);
                     }
                     for (var x = 0; x < level.width; ++x) {
                         for (var y = 0; y < level.height; ++y) {
@@ -128,6 +131,17 @@ define([
                         }
                     }
                 });
+
+                if (
+                    layers.slice(1).every(function (layer) {
+                        return layer.getTile(player.x, player.y) < 0;
+                    })
+                ) {
+                    var pc = layers[0].getTilePos(player.x, player.y);
+                    context.drawImage(player.imgs[1], pc.x, pc.y - 16);
+                    context.drawImage(player.imgs[2], pc.x - 16, pc.y - 8);
+                    context.drawImage(player.imgs[3], pc.x + 16, pc.y - 8);
+                }
 
                 requestAnimationFrame(render);
             }
