@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="isometric" width="20" height="20" tilewidth="32" tileheight="16">
+ <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="16">
+  <image source="tileset.png" width="512" height="256"/>
+ </tileset>
+ <layer name="ground" width="20" height="20">
+  <data encoding="base64" compression="zlib">
+   eJz7yMDA8HEY4U94MLnmkSJOC/PIkRtq/sUXb8TEIzbzKE1Ho+YRjx8OcvcNhHmUYkrcQy8MAJGweM8=
+  </data>
+ </layer>
+ <layer name="bricks" width="20" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxjYBg4wIgHs5BpHhMQc6JhkDgHmeZh0zfSzcMXb+iYWPOwxRs2zEykeeT4f9S8kWsepRjZPDYG4tIyqel8MAIAF/4CMA==
+  </data>
+ </layer>
+ <layer name="button_layer" width="20" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxjYBga4CIQM6JhFgrMA+lnAmJOJMxMgZkg8zjQzGDDYyYh98PMg5kBA7jMfARVjwvgcws2OZj9+NyI7jZ8cjA+JWFMqhtGwSgYBbQFABkEAnw=
+  </data>
+ </layer>
+ <layer name="red_layer" width="20" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFIKAExCxUNo9j1Lxhax4bEDNT0bxRMAqGIgAA9rgBLA==
+  </data>
+ </layer>
+ <layer name="add_column" width="20" height="20">
+  <properties>
+   <property name="visibility" value="hidden"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUkAoYgZiFiuaxATHzqJlDwsxRgAAApDQAUA==
+  </data>
+ </layer>
+ <layer name="tardis" width="20" height="20">
+  <data encoding="base64" compression="zlib">
+   eJyLYKA+yKCBmRU0MHMUjIJRMApGAfkAADPJATk=
+  </data>
+ </layer>
+ <objectgroup name="button" width="20" height="20">
+  <object name="button" x="228" y="84" width="10" height="9"/>
+ </objectgroup>
+</map>

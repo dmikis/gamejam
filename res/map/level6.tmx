@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="isometric" width="32" height="32" tilewidth="32" tileheight="16">
+ <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="16">
+  <image source="tileset.png" width="512" height="256"/>
+  <tile id="0">
+   <properties>
+    <property name="type" value="xray"/>
+   </properties>
+  </tile>
+  <tile id="208">
+   <properties>
+    <property name="type" value="exit"/>
+   </properties>
+  </tile>
+  <tile id="224">
+   <properties>
+    <property name="type" value="entrance"/>
+   </properties>
+  </tile>
+  <tile id="241">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Tile Layer 1" width="32" height="32">
+  <data encoding="base64" compression="zlib">
+   eJztz6ERADAMAzHvv20yQWkniInAY91PklG21O83nvl8Pp/P5/P5fD6ff+83esGsxKI=
+  </data>
+ </layer>
+ <layer name="Tile Layer 2" width="32" height="32">
+  <data encoding="base64" compression="zlib">
+   eJztlFsOhCAMRSsaor8z+1+US3BmIyMJTWqtpgMF/KBJY3iYc4HbAjwjhgY5Efa6p9tzqZSBORN+YI8Z9/dvcP58s7fz2/GpVyXvluSjL3Hdw9G7ORq0/EFYx/GYoUHDx/MucKxNH8f4TdGgPf8kjOl8qgYtn84j632hwZr/gbP/X5GVWxcp7+8Zy5F53tMt+KiBvi9qcHB+9xL8Kw3U/3yfNZ9r0NSFNZ9quKuLEvcv/cv9/40aavClupD6ZCm+RXR+53d+ff7WmI/B+S0S+bR/1szQq39gQwnJ
+  </data>
+ </layer>
+ <layer name="TARDIS" width="32" height="32">
+  <data encoding="base64" compression="zlib">
+   eJztzjERADAIBLDKREIlIB9McL8kClIv76cDq9MBAAAAODTfrgE5
+  </data>
+ </layer>
+ <layer name="Layer_L1" width="32" height="32" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJztzrEJAEAIBEEN3v5L1hY+EmEGNr6LAADgklzer+ktfwDgXwNVbAAN
+  </data>
+ </layer>
+ <layer name="Layer_R1" width="32" height="32" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJztzsEJAEAIA0GFA/vvWGu4jwgzsO8kAgDgX05v+UMt7wPABQ1oxAAN
+  </data>
+ </layer>
+ <layer name="Layer_L2" width="32" height="32" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJztzsEJAEAIA0GFA/vvWDu4pwgzsO8kAgDgL6e3/KGW9wHgsgZp5AAN
+  </data>
+ </layer>
+ <layer name="Layer_R2" width="32" height="32" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJztzrEJAEAIBEEN3v5L1hY+EmEGNr6LAIB7cnm/prf8AQDgRwN5bAAN
+  </data>
+ </layer>
+ <layer name="Layer_L3" width="32" height="32" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJztzrENAEAIAzEonv1HhiFegsKWrk4iAOCuXN6v6S1/AAD4oQF6jAAN
+  </data>
+ </layer>
+ <layer name="Layer_R3" width="32" height="32" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJztzsEJAEAIA0GFA/vvWEu4nwgzsO8kAoBfOb3lD7W8DwDATQ2N5AAN
+  </data>
+ </layer>
+ <layer name="Layer_L4" width="32" height="32" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJztzsEJAEAIA0GFA/vvWN/XgCAzsO8kAoBfTm/5Qy3vAwBwSwOPBAAN
+  </data>
+ </layer>
+ <layer name="Layer_R4" width="32" height="32" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJztzrERADAIAzEowv4jww4poJDuvrYjgOtyeb+mt/wBAAD4056MAA0=
+  </data>
+ </layer>
+ <layer name="Layer_U" width="32" height="32" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJztzrENACAMA8Egoew/MjQZAZniTnLtr2Ksux38niUaWsOXDSkd/AYAAN44dlUAQg==
+  </data>
+ </layer>
+</map>
