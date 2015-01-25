@@ -37,7 +37,13 @@ define([
             modPlayer.play(buffer);
         });
     }
-
+    
+    window.togglePlayer = function() {
+        if (modPlayer) {
+            modPlayer.togglePause();
+        }
+    }
+    
     function getTileProperties(tilesets, tileGid) {
         var i = 0;
 
