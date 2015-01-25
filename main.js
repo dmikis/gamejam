@@ -43,6 +43,9 @@ define(['level.js'], function (playLevel) {
         if (levelIdx === levels.length) {
             lvlCounter.innerHTML = 'You\'ve beaten the architecture!';
             lvlCounter.style.color = 'red';
+            var winImg = new Image();
+            winImg.src = 'res/win.png';
+            document.body.appendChild(winImg);
             return;
         }
         lvlCounter.innerHTML = 'Level ' + (levelIdx + 1);
