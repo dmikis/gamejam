@@ -47,11 +47,11 @@ define([
                     howlSound.play(spriteName);
                 }
             }
-            
+
             window.toggleSound = function() {
                 isSound = !isSound;
             }
-            
+
             function playExit() {
                 console.log('exit');
                 hasFinished = true;
@@ -334,19 +334,32 @@ define([
                             gamepadInterval =  setInterval(function () {
                                 var nextX = player.x, nextY = player.y;
                                 if (f) return;
+                                var gamepad = navigator.getGamepads()[0];
                                 switch ((true)) {
                                     case !!gamepad.buttons[0].pressed:
-                                        if (
-                                            layers[player.level + 1] &&
-                                            layers[player.level + 1].getTile(nextX, nextY) >= 0 &&
-                                            tileIsNotWall(player.level + 1, level, nextX, nextY)
-                                        ) {
-                                            player.level += 1;
-                                        }
-                                        break;
-                                        
                                     case !!gamepad.buttons[1].pressed:
-                                        console.log(1);
+                                        variation = 1;
+                                        if (gamepad.buttons[0].pressed) {
+                                            variation = -1;
+                                        }
+                                        curLevel = player.level;
+                                        var xraySuccess = false;
+                                        while (layers[curLevel + variation]) {
+                                            if (level.layers[curLevel].visible && layers[curLevel + variation].getTile(nextX, nextY) >= 0) {
+                                                if (tileIsNotWall(curLevel + variation, level, nextX, nextY)) {
+                                                    if (tileIsNotNoXRay(curLevel + variation, level, nextX, nextY)) {
+                                                        player.level = curLevel + variation;
+                                                        playSoundSprite('xray');
+                                                        xraySuccess = true;
+                                                    }
+                                                    break;
+                                                }
+                                            }
+                                            curLevel += variation;
+                                        }
+                                        if (!xraySuccess) {
+                                            playWall();
+                                        }
                                         break;
                                     case !!gamepad.buttons[2].pressed:
                                         console.log(3);
@@ -395,18 +408,62 @@ define([
                                         f = false;
                                 }
 
-                                if (
-                                    tileIsNotWall(player.level, level, nextX, nextY) &&
-                                    layers[player.level].getTile(nextX, nextY) >= 0
-                                ) {
+                                shouldMove = false;
+                                nextLevel = player.level;
+                                if ((layers[player.level].getTile(nextX, nextY) >= 0) && tileIsNotWall(player.level, level, nextX, nextY)) {
+                                    shouldMove = true;
+                                } else if ((player.x != nextX) || (player.y != nextY)) {
+                                    curLevel = 0;
+                                    if (layers[player.level].getTile(nextX, nextY) >= 0)
+                                        curLevel = player.level;
+                                    lastNonWallLevel = curLevel;
+                                    lastTileWasNotWall = false;
+                                    while (layers[curLevel + 1]) {
+                                        if (layers[curLevel + 1].getTile(nextX, nextY) >= 0) {
+                                            lastTileWasNotWall = tileIsNotWall(curLevel + 1, level, nextX, nextY) && sameType(player.level, player.x, player.y, curLevel + 1, nextX, nextY, layers);
+                                            if (lastTileWasNotWall) {
+                                                lastNonWallLevel = curLevel + 1;
+                                            }
+                                        }
+                                        if (lastTileWasNotWall) {
+                                            shouldMove = true;
+                                            nextLevel = lastNonWallLevel;
+                                        }
+                                        curLevel += 1;
+                                    }
+                                }
+                                if (shouldMove) {
                                     player.x = nextX;
                                     player.y = nextY;
+                                    player.level = nextLevel;
+                                    playStep();
+                                } else {
+                                    playWall();
                                 }
 
                                 if (
                                     layers[player.level].getTile(player.x, player.y) === getTilesByType(level, 'exit')[0]
                                 ) {
                                     playExit();
+                                    context.canvas.parentElement.removeChild(context.canvas);
+                                    //hasFinished = true;
+                                    if (gamepadInterval) {
+                                        clearInterval(gamepadInterval);
+                                    }
+                                    document.onkeydown = document.onkeyup = null;
+                                    resolve();
+                                }
+
+                                if (
+                                    layers[player.level].getTile(player.x, player.y) === getTilesByType(level, 'button')[0]
+                                ) {
+                                    switch (levelFile) {
+                                        case 'res/maps/level2.json':
+                                            level.layers[4].visible = true;
+                                            console.log('push da button');
+                                            playButton();
+                                            break;
+                                    }
                                 }
                             }, 100);
                         }
