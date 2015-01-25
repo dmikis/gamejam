@@ -21,8 +21,11 @@ define([
 
 
     var modPlayer;
+    var modTimeout;
+    var isMusic = true;
     var hasFinished = false;
-
+    
+    
     function loopPlayer() {
         if (modPlayer) {
             modPlayer.stop();
@@ -32,15 +35,21 @@ define([
         modPlayer.load('res/music/theme.xm', function(buffer){
             modPlayer.play(buffer);
             modPlayer.togglePause(buffer);
-
-            setTimeout(loopPlayer, 1000 * modPlayer.duration());
+            
+            modTimeout = setTimeout(loopPlayer, 1000 * modPlayer.duration());
             modPlayer.play(buffer);
         });
     }
     
     window.togglePlayer = function() {
         if (modPlayer) {
-            modPlayer.togglePause();
+            if (isMusic) {
+                modPlayer.stop();
+                clearTimeout(modTimeout);
+            } else {
+                loopPlayer();
+            }
+            isMusic = !isMusic;
         }
     }
     
