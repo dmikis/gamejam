@@ -47,7 +47,11 @@ define([
                     howlSound.play(spriteName);
                 }
             }
-
+            
+            window.toggleSound = function() {
+                isSound = !isSound;
+            }
+            
             function playExit() {
                 console.log('exit');
                 hasFinished = true;
@@ -331,7 +335,7 @@ define([
                                 var nextX = player.x, nextY = player.y;
                                 if (f) return;
                                 switch ((true)) {
-                                    case gamepad.buttons[0].pressed:
+                                    case !!gamepad.buttons[0].pressed:
                                         if (
                                             layers[player.level + 1] &&
                                             layers[player.level + 1].getTile(nextX, nextY) >= 0 &&
@@ -340,49 +344,50 @@ define([
                                             player.level += 1;
                                         }
                                         break;
-                                    case gamepad.buttons[1].pressed:
+                                        
+                                    case !!gamepad.buttons[1].pressed:
                                         console.log(1);
                                         break;
-                                    case gamepad.buttons[2].pressed:
+                                    case !!gamepad.buttons[2].pressed:
                                         console.log(3);
                                         break;
-                                    case gamepad.buttons[3].pressed:
+                                    case !!gamepad.buttons[3].pressed:
                                         console.log(3);
                                         break;
-                                    case gamepad.buttons[4].pressed:
+                                    case !!gamepad.buttons[4].pressed:
                                         console.log(4);
                                         break;
-                                    case gamepad.buttons[5].pressed:
+                                    case !!gamepad.buttons[5].pressed:
                                         console.log(5);
                                         break;
-                                    case gamepad.buttons[6].pressed:
+                                    case !!gamepad.buttons[6].pressed:
                                         console.log(6);
                                         break;
-                                    case gamepad.buttons[7].pressed:
+                                    case !!gamepad.buttons[7].pressed:
                                         console.log(7);
                                         break;
-                                    case gamepad.buttons[8].pressed:
+                                    case !!gamepad.buttons[8].pressed:
                                         console.log(8);
                                         break;
-                                    case gamepad.buttons[9].pressed:
+                                    case !!gamepad.buttons[9].pressed:
                                         console.log(9);
                                         break;
-                                    case gamepad.buttons[10].pressed:
+                                    case !!gamepad.buttons[10].pressed:
                                         console.log(10);
                                         break;
-                                    case gamepad.buttons[11].pressed:
+                                    case !!gamepad.buttons[11].pressed:
                                         console.log(11);
                                         nextY = clamp(player.y - 1, 0, level.height - 1);
                                         break;
-                                    case gamepad.buttons[12].pressed:
+                                    case !!gamepad.buttons[12].pressed:
                                         console.log(12);
                                         nextY = clamp(player.y + 1, 0, level.height - 1);
                                         break;
-                                    case gamepad.buttons[13].pressed:
+                                    case !!gamepad.buttons[13].pressed:
                                         console.log(13);
                                         nextX = clamp(player.x - 1, 0, level.width - 1);
                                         break;
-                                    case gamepad.buttons[14].pressed:
+                                    case !!gamepad.buttons[14].pressed:
                                         console.log(14);
                                         nextX = clamp(player.x + 1, 0, level.width - 1);
                                         break;
