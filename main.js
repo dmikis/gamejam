@@ -189,7 +189,7 @@ define([
             input.keyboard(function (key, pressed, e) {
                 if (hasFinished)
                 return;
-                if (!pressed) {
+                if (pressed) {
                     var nextX = player.x, nextY = player.y;
                     switch (key) {
                         case 38: // arrow up
