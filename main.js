@@ -26,8 +26,8 @@ define([
     var isSound = true;
     var howlSound;
     var hasFinished = false;
-    
-    
+
+
     function loopPlayer() {
         if (modPlayer) {
             modPlayer.stop();
@@ -37,7 +37,7 @@ define([
         modPlayer.load('res/music/theme.xm', function(buffer){
             modPlayer.play(buffer);
             modPlayer.togglePause(buffer);
-            
+
             modTimeout = setTimeout(loopPlayer, 1000 * modPlayer.duration());
             modPlayer.play(buffer);
         });
@@ -225,6 +225,11 @@ define([
                 return;
                 if (pressed) {
                     var nextX = player.x, nextY = player.y;
+
+                    if ([38, 40, 37, 39, 90, 88].indexOf(key) >= 0) {
+                        e.preventDefault();
+                    }
+
                     switch (key) {
                         case 38: // arrow up
                             nextY = clamp(player.y - 1, 0, level.height - 1);
