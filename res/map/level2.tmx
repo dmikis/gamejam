@@ -1,7 +1,107 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="isometric" width="20" height="20" tilewidth="32" tileheight="16">
+<map version="1.0" orientation="isometric" renderorder="right-down" width="20" height="20" tilewidth="32" tileheight="16" nextobjectid="2">
  <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="16">
   <image source="tileset.png" width="512" height="256"/>
+  <tile id="0">
+   <properties>
+    <property name="type" value="xray"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="5">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="6">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="7">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="8">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="16">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="17">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="18">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="32">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="33">
+   <properties>
+    <property name="type" value="noXRay"/>
+   </properties>
+  </tile>
+  <tile id="34">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="128">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="208">
+   <properties>
+    <property name="type" value="exit"/>
+   </properties>
+  </tile>
+  <tile id="224">
+   <properties>
+    <property name="type" value="entrance"/>
+   </properties>
+  </tile>
+  <tile id="225">
+   <properties>
+    <property name="type" value="button"/>
+   </properties>
+  </tile>
+  <tile id="241">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
  </tileset>
  <layer name="ground" width="20" height="20">
   <data encoding="base64" compression="zlib">
@@ -15,7 +115,7 @@
  </layer>
  <layer name="button_layer" width="20" height="20">
   <data encoding="base64" compression="zlib">
-   eJxjYBga4CIQM6JhFgrMA+lnAmJOJMxMgZkg8zjQzGDDYyYh98PMg5kBA7jMfARVjwvgcws2OZj9+NyI7jZ8cjA+JWFMqhtGwSgYBbQFABkEAnw=
+   eJxjYBg64CIQMyJhFgrNA5nBBMScUMxMoZkg8ziQ+Gx4zCTG/dj04zLzEZrdlJoJ8wsx4QHTj08Mxqc0jImxexSMglFAHwAApkkCZg==
   </data>
  </layer>
  <layer name="red_layer" width="20" height="20">
@@ -23,20 +123,14 @@
    eJxjYBgFIKAExCxUNo9j1Lxhax4bEDNT0bxRMAqGIgAA9rgBLA==
   </data>
  </layer>
- <layer name="add_column" width="20" height="20">
-  <properties>
-   <property name="visibility" value="hidden"/>
-  </properties>
+ <layer name="add_shelf" width="20" height="20" visible="0">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFo2AUkAoYgZiFiuaxATHzqJlDwsxRgAAApDQAUA==
+   eJxjYBgFgxUwAjELlc3jGDWPbMAGxMxUNG8UjIKhDgDDfAAz
   </data>
  </layer>
  <layer name="tardis" width="20" height="20">
   <data encoding="base64" compression="zlib">
-   eJyLYKA+yKCBmRU0MHMUjIJRMApGAfkAADPJATk=
+   eJxjYGBgiGCgPsiggZkVNDBzFIyCUTAKRgF5AAAu6QE5
   </data>
  </layer>
- <objectgroup name="button" width="20" height="20">
-  <object name="button" x="228" y="84" width="10" height="9"/>
- </objectgroup>
 </map>

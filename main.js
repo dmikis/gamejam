@@ -16,8 +16,8 @@ define([
     clamp,
     pathResolve
 ) {
-    var levelFile = 'res/maps/level3.json';
-    //var levelFile = 'res/maps/level2.json';
+    //var levelFile = 'res/maps/level3.json';
+    var levelFile = 'res/maps/level2.json';
 
 
     var modPlayer;
@@ -40,7 +40,7 @@ define([
             modPlayer.play(buffer);
         });
     }
-    
+
     window.togglePlayer = function() {
         if (modPlayer) {
             if (isMusic) {
@@ -52,7 +52,7 @@ define([
             isMusic = !isMusic;
         }
     }
-    
+
     function getTileProperties(tilesets, tileGid) {
         var i = 0;
 
@@ -160,41 +160,37 @@ define([
                         context.drawImage(player.imgs[2], pc.x - 16, pc.y - 8);
                         context.drawImage(player.imgs[3], pc.x + 16, pc.y - 8);
                     }
+                    if (!level.layers[i].visible) {
+                        return;
+                    }
                     for (var x = 0; x < level.width; ++x) {
                         for (var y = 0; y < level.height; ++y) {
                             if (i > player.level && layer.getTile(player.x, player.y) >= 0) {
                                 if (x === player.x && y === player.y) {
-                                    context.globalAlpha = 0.1;
-                                } else if (Math.abs(x - player.x) + Math.abs(y - player.y) === 1) {
                                     context.globalAlpha = 0.3;
-                                } else if (Math.abs(x - player.x) === 1 && Math.abs(y - player.y) === 1) {
+                                } else if (Math.abs(x - player.x) + Math.abs(y - player.y) === 1) {
                                     context.globalAlpha = 0.5;
+                                } else if (Math.abs(x - player.x) === 1 && Math.abs(y - player.y) === 1) {
+                                    context.globalAlpha = 0.7;
                                 }
                             }
                             layer.draw(x, y);
                             context.globalAlpha = 1;
                         }
                     }
+
+                    if (i <= player.level) {
+                        pc = layers[0].getTilePos(player.x, player.y);
+                        context.drawImage(player.imgs[1], pc.x, pc.y - 16);
+                        context.drawImage(player.imgs[2], pc.x - 16, pc.y - 8);
+                        context.drawImage(player.imgs[3], pc.x + 16, pc.y - 8);
+                    }
                 });
 
-                if (layers.length === player.level + 1) {
-                    var pc = layers[0].getTilePos(player.x, player.y);
-                    context.drawImage(player.imgs[0], pc.x, pc.y);
-                    context.drawImage(player.imgs[1], pc.x, pc.y - 16);
-                    context.drawImage(player.imgs[2], pc.x - 16, pc.y - 8);
-                    context.drawImage(player.imgs[3], pc.x + 16, pc.y - 8);
-                }
-
-                if (
-                    layers.slice(player.level + 1).every(function (layer) {
-                        return layer.getTile(player.x, player.y) < 0;
-                    })
-                ) {
-                    pc = layers[0].getTilePos(player.x, player.y);
-                    context.drawImage(player.imgs[1], pc.x, pc.y - 16);
-                    context.drawImage(player.imgs[2], pc.x - 16, pc.y - 8);
-                    context.drawImage(player.imgs[3], pc.x + 16, pc.y - 8);
-                }
+                pc = layers[0].getTilePos(player.x, player.y);
+                context.drawImage(player.imgs[1], pc.x, pc.y - 16);
+                context.drawImage(player.imgs[2], pc.x - 16, pc.y - 8);
+                context.drawImage(player.imgs[3], pc.x + 16, pc.y - 8);
 
                 requestAnimationFrame(render);
             }
@@ -227,7 +223,7 @@ define([
                             }
                             curLevel = player.level;
                             while (layers[curLevel + variation]) {
-                                if (layers[curLevel + variation].getTile(nextX, nextY) >= 0) {
+                                if (level.layers[curLevel].visible && layers[curLevel + variation].getTile(nextX, nextY) >= 0) {
                                     if (tileIsNotWall(curLevel + variation, level, nextX, nextY)) {
                                         if (tileIsNotNoXRay(curLevel + variation, level, nextX, nextY)) {
                                             player.level = curLevel + variation;
@@ -275,6 +271,15 @@ define([
                     ) {
                         console.log('exit');
                         hasFinished = true;
+                    }
+
+                    if (
+                        layers[player.level].getTile(player.x, player.y) === getTilesByType(level, 'button')[0]
+                    ) {
+                        switch (levelFile) {
+                            case 'res/maps/level2.json':
+                                level.layers[4].visible = true;
+                        }
                     }
                 }
             });
