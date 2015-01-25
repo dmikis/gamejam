@@ -65,15 +65,35 @@ define([
                 xray: [0, 630],
                 wall: [642, 45],
                 step: [694, 47],
-                done: [741, 620]
+                done: [741, 665],
+                button: [1405, 475]
               }
             });
     }
     
     function playSoundSprite(spriteName) {
         if (isSound && howlSound) {
+            console.log('playing sprite ' + spriteName);
             howlSound.play(spriteName);
         }
+    }
+    
+    function playExit() {
+        console.log('exit');
+        hasFinished = true;
+        playSoundSprite('done');
+    }
+    
+    function playWall() {
+        playSoundSprite('wall');
+    }
+    
+    function playStep() {
+        playSoundSprite('step');
+    }
+    
+    function playButton() {
+        playSoundSprite('button');
     }
     
     function getTileProperties(tilesets, tileGid) {
@@ -250,17 +270,22 @@ define([
                                 variation = -1;
                             }
                             curLevel = player.level;
+                            var xraySuccess = false;
                             while (layers[curLevel + variation]) {
                                 if (level.layers[curLevel].visible && layers[curLevel + variation].getTile(nextX, nextY) >= 0) {
                                     if (tileIsNotWall(curLevel + variation, level, nextX, nextY)) {
                                         if (tileIsNotNoXRay(curLevel + variation, level, nextX, nextY)) {
                                             player.level = curLevel + variation;
                                             playSoundSprite('xray');
+                                            xraySuccess = true;
                                         }
                                         break;
                                     }
                                 }
                                 curLevel += variation;
+                            }
+                            if (!xraySuccess) {
+                                playWall();
                             }
                             break;
                     }
@@ -293,13 +318,15 @@ define([
                         player.x = nextX;
                         player.y = nextY;
                         player.level = nextLevel;
+                        playStep();
+                    } else {
+                        playWall();
                     }
 
                     if (
                         layers[player.level].getTile(player.x, player.y) === getTilesByType(level, 'exit')[0]
                     ) {
-                        console.log('exit');
-                        hasFinished = true;
+                        playExit();
                     }
 
                     if (
@@ -308,6 +335,9 @@ define([
                         switch (levelFile) {
                             case 'res/maps/level2.json':
                                 level.layers[4].visible = true;
+                                console.log('push da button');
+                                playButton();
+                                break;
                         }
                     }
                 }
@@ -394,7 +424,7 @@ define([
                         if (
                             layers[player.level].getTile(player.x, player.y) === getTilesByType(level, 'exit')[0]
                         ) {
-                            console.log('exit');
+                            playExit();
                         }
                     }, 100);
                 }
