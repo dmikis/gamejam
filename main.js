@@ -16,8 +16,8 @@ define([
     clamp,
     pathResolve
 ) {
-    //var levelFile = 'res/maps/level3.json';
-    var levelFile = 'res/maps/level2.json';
+    var levelFile = 'res/maps/level3.json';
+    //var levelFile = 'res/maps/level2.json';
 
 
     var modPlayer;
@@ -333,7 +333,7 @@ define([
                         layers[player.level].getTile(player.x, player.y) === getTilesByType(level, 'button')[0]
                     ) {
                         switch (levelFile) {
-                            case 'res/maps/level2.json':
+                            case 'res/maps/level3.json':
                                 level.layers[4].visible = true;
                                 console.log('push da button');
                                 playButton();
