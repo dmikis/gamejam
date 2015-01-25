@@ -23,6 +23,8 @@ define([
     var modPlayer;
     var modTimeout;
     var isMusic = true;
+    var isSound = true;
+    var howlSound;
     var hasFinished = false;
     
     
@@ -52,7 +54,28 @@ define([
             isMusic = !isMusic;
         }
     }
-
+    
+    function loadSoundSprites() {
+        if (howlSound) {
+            return;
+        }
+        howlSound = new Howl({
+              urls: ['res/sound/sprites.wav'],
+              sprite: {
+                xray: [0, 630],
+                wall: [642, 45],
+                step: [694, 47],
+                done: [741, 620]
+              }
+            });
+    }
+    
+    function playSoundSprite(spriteName) {
+        if (isSound && howlSound) {
+            howlSound.play(spriteName);
+        }
+    }
+    
     function getTileProperties(tilesets, tileGid) {
         var i = 0;
 
@@ -227,6 +250,7 @@ define([
                                     if (tileIsNotWall(curLevel + variation, level, nextX, nextY)) {
                                         if (tileIsNotNoXRay(curLevel + variation, level, nextX, nextY)) {
                                             player.level = curLevel + variation;
+                                            playSoundSprite('xray');
                                         }
                                         break;
                                     }
@@ -384,6 +408,7 @@ define([
             }
 
             render();
+            loadSoundSprites();
             loopPlayer();
         });
     });
