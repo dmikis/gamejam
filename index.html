@@ -7,16 +7,19 @@
 <head>
 <body>
     <h1>Adventures of Vasily the Pyramid</h1>
+    <h3 id="lvlcounter"></h3>
     <script data-main="main" src="require.js"></script>
-    <input type="checkbox" id="music" checked onclick='togglePlayer();' tabIndex="-1">Music<br />
-    <div id='help'>
-        In Soviet Russia architecture builds you!<br/>
-        Your aim is to deliver Vasily the Pyramid to home.<br/>
-        Vasily posseses the magic ability to teleport between platforms.<br/>
-        Some platforms are unable to teleport.<br/>
-        A button can save the day.<br/>
-        Use arrows to move, Z and X to teleport.<br/>
-        The game supports XBox-compatible joystick.
+    <div style="float: right">
+        Toggle music: <input type="checkbox" id="music" checked onclick='togglePlayer();' tabIndex="-1">
+        <div id='help' style="margin-top: 20px">
+            In Soviet Russia architecture builds you!<br/>
+            Your aim is to deliver Vasily the Pyramid to home.<br/>
+            Vasily posseses the magic ability to teleport between platforms.<br/>
+            Some platforms are unable to teleport.<br/>
+            A button can save the day.<br/>
+            Use arrows to move, Z and X to teleport.<br/>
+            The game supports XBox-compatible joystick.
+        </div>
     </div>
 </body>
 </html>

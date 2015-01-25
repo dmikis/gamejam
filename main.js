@@ -38,8 +38,14 @@ define(['level.js'], function (playLevel) {
 
     loopPlayer();
 
+    var lvlCounter = document.querySelector('#lvlcounter');
     function playLevelWrap(levelIdx) {
-        if (levelIdx === levels.length) return;
+        if (levelIdx === levels.length) {
+            lvlCounter.innerHTML = 'You\'ve beaten the architecture!';
+            lvlCounter.style.color = 'red';
+            return;
+        }
+        lvlCounter.innerHTML = 'Level ' + (levelIdx + 1);
         playLevel(levels[levelIdx]).then(function () { playLevelWrap(levelIdx + 1); });
     }
 
