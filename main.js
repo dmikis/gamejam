@@ -16,9 +16,12 @@ define([
     clamp,
     pathResolve
 ) {
-    var levelFile = 'res/maps/level0.json';
+    var levelFile = 'res/maps/level3.json';
+    //var levelFile = 'res/maps/level2.json';
+
 
     var modPlayer;
+    var hasFinished = false;
 
     function loopPlayer() {
         if (modPlayer) {
@@ -59,6 +62,14 @@ define([
 
     function tileIsNotWall(layerId, level, x, y) {
         return getTilesByType(level, 'wall').indexOf(level.layers[layerId].data[y * level.width + x] - 1) === -1;
+    }
+
+    function tileIsNotNoXRay(layerId, level, x, y) {
+        return getTilesByType(level, 'noXRay').indexOf(level.layers[layerId].data[y * level.width + x] - 1) === -1;
+    }
+
+    function sameType(layerId1, x1, y1, layerId2, x2, y2, layers) {
+        return layers[layerId1].getTile(x1, y1) === layers[layerId2].getTile(x2, y2);
     }
 
     function setPlayerEntryCoords(player, level) {
@@ -168,6 +179,8 @@ define([
             var input = new InputControl(document, context.canvas);
 
             input.keyboard(function (key, pressed, e) {
+                if (hasFinished)
+                return;
                 if (!pressed) {
                     var nextX = player.x, nextY = player.y;
                     switch (key) {
@@ -183,29 +196,62 @@ define([
                         case 39: // arrow right
                             nextX = clamp(player.x + 1, 0, level.width - 1);
                             break;
-                        case 32: // space
-                            if (
-                                layers[player.level + 1] &&
-                                layers[player.level + 1].getTile(nextX, nextY) >= 0 &&
-                                tileIsNotWall(player.level + 1, level, nextX, nextY)
-                            ) {
-                                player.level += 1;
+                        case 90: // z button
+                        case 88: // x button
+                            variation = 1;
+                            if (key === 88) {
+                                variation = -1;
+                            }
+                            curLevel = player.level;
+                            while (layers[curLevel + variation]) {
+                                if (layers[curLevel + variation].getTile(nextX, nextY) >= 0) {
+                                    if (tileIsNotWall(curLevel + variation, level, nextX, nextY)) {
+                                        if (tileIsNotNoXRay(curLevel + variation, level, nextX, nextY)) {
+                                            player.level = curLevel + variation;
+                                        }
+                                        break;
+                                    }
+                                }
+                                curLevel += variation;
                             }
                             break;
                     }
 
-                    if (
-                        tileIsNotWall(player.level, level, nextX, nextY) &&
-                        layers[player.level].getTile(nextX, nextY) >= 0
-                    ) {
+                    shouldMove = false;
+                    nextLevel = player.level;
+                    if ((layers[player.level].getTile(nextX, nextY) >= 0) && tileIsNotWall(player.level, level, nextX, nextY)) {
+                        shouldMove = true;
+                    } else if ((player.x != nextX) || (player.y != nextY)) {
+                        curLevel = 0;
+                        if (layers[player.level].getTile(nextX, nextY) >= 0)
+                            curLevel = player.level;
+                        lastNonWallLevel = curLevel;
+                        lastTileWasNotWall = false;
+                        while (layers[curLevel + 1]) {
+                            if (layers[curLevel + 1].getTile(nextX, nextY) >= 0) {
+                                lastTileWasNotWall = tileIsNotWall(curLevel + 1, level, nextX, nextY) && sameType(player.level, player.x, player.y, curLevel + 1, nextX, nextY, layers);
+                                if (lastTileWasNotWall) {
+                                    lastNonWallLevel = curLevel + 1;
+                                }
+                            }
+                            if (lastTileWasNotWall) {
+                                shouldMove = true;
+                                nextLevel = lastNonWallLevel;
+                            }
+                            curLevel += 1;
+                        }
+                    }
+                    if (shouldMove) {
                         player.x = nextX;
                         player.y = nextY;
+                        player.level = nextLevel;
                     }
 
                     if (
                         layers[player.level].getTile(player.x, player.y) === getTilesByType(level, 'exit')[0]
                     ) {
                         console.log('exit');
+                        hasFinished = true;
                     }
                 }
             });
