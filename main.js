@@ -162,12 +162,20 @@ define([
                     }
                 });
 
+                if (layers.length === player.level + 1) {
+                    var pc = layers[0].getTilePos(player.x, player.y);
+                    context.drawImage(player.imgs[0], pc.x, pc.y);
+                    context.drawImage(player.imgs[1], pc.x, pc.y - 16);
+                    context.drawImage(player.imgs[2], pc.x - 16, pc.y - 8);
+                    context.drawImage(player.imgs[3], pc.x + 16, pc.y - 8);
+                }
+
                 if (
                     layers.slice(player.level + 1).every(function (layer) {
                         return layer.getTile(player.x, player.y) < 0;
                     })
                 ) {
-                    var pc = layers[0].getTilePos(player.x, player.y);
+                    pc = layers[0].getTilePos(player.x, player.y);
                     context.drawImage(player.imgs[1], pc.x, pc.y - 16);
                     context.drawImage(player.imgs[2], pc.x - 16, pc.y - 8);
                     context.drawImage(player.imgs[3], pc.x + 16, pc.y - 8);
