@@ -102,9 +102,9 @@ define([
             graphics: ['res/player-top.png', 'res/player-base.png', 'res/player-left.png', 'res/player-right.png']
         })).then(function (imgRes) {
             console.log(imgRes);
-            var context = CanvasControl.create('canvas', 640, 480);
+            var context = CanvasControl.create('canvas', 900, 600);
             var layers = level.layers.map(function (layer) {
-                var l = new TileField(context, 640, 480);
+                var l = new TileField(context, 900, 600);
                 l.setup({
                     layout: layer.data.map(function (i) { return i - 1; }),
                     graphics: imgRes[0].files,
@@ -135,7 +135,7 @@ define([
             setPlayerEntryCoords(player, level);
 
             function render() {
-                context.clearRect(0, 0, 640, 480);
+                context.clearRect(0, 0, 900, 600);
 
                 layers.forEach(function (layer, i) {
                     if (i === player.level + 1) {
@@ -163,7 +163,7 @@ define([
                 });
 
                 if (
-                    layers.slice(1).every(function (layer) {
+                    layers.slice(player.level + 1).every(function (layer) {
                         return layer.getTile(player.x, player.y) < 0;
                     })
                 ) {
