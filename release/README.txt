@@ -1,0 +1,1 @@
+We don’t have any *build*. You can run game from the source directory (see README) or got to http://dmikis.github.io/gamejam/
