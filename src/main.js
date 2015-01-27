@@ -7,7 +7,7 @@ define(['level.js'], function (playLevel) {
 
     var modPlayer;
     var modTimeout;
-    var isMusic = true;
+    var isMusic = false;
 
     function loopPlayer() {
         if (modPlayer) {
@@ -35,8 +35,9 @@ define(['level.js'], function (playLevel) {
             isMusic = !isMusic;
         }
     }
-
-    loopPlayer();
+    if (isMusic) {
+        loopPlayer();
+    }
 
     var lvlCounter = document.querySelector('#lvlcounter');
     function playLevelWrap(levelIdx) {

@@ -146,12 +146,17 @@ define([
                             width: layer.width,
                             height: layer.height,
                             type: layer.type,
-                            lightmap: [],
-                            shadowDistance: {
-                                color: '0, 0, 33',
-                                distance: 7,
-                                darkness: 0.95
-                            }
+                            //lightmap: [],
+                            //shadowDistance: {
+                            //    color: '0, 0, 33',
+                            //    distance: 1,
+                            //    darkness: 0.95
+                            //},
+                            //shadow: {
+                            //    offset: 0, // Offset is the same height as the stack tile
+                            //    verticalColor: '(5, 5, 30, 0.4)',
+                            //    horizontalColor: '(6, 5, 50, 0.5)'
+                            //}
                         });
 
                         l.flip("horizontal");
@@ -190,15 +195,15 @@ define([
                                 for (var y = 0; y < level.height; ++y) {
                                     if (i > player.level) {// && layer.getTile(player.x, player.y) >= 0) {
                                         if (x === player.x && y === player.y) {
-                                            context.globalAlpha = 0.0;
+                                            context.globalAlpha = 0.3;
                                         } else if (Math.abs(x - player.x) + Math.abs(y - player.y) === 1) {
                                             context.globalAlpha = 0.5;
                                         } else if (Math.abs(x - player.x) === 1 && Math.abs(y - player.y) === 1) {
                                             context.globalAlpha = 0.7;
                                         }
                                     }
-                                    if ((x === player.x) && (y === player.y))
-                                        layer.setLight(x, y);
+                                    //if ((x === player.x) && (y === player.y))
+                                    //    layer.setLight(x, y);
                                     layer.draw(x, y);
                                     context.globalAlpha = 1;
                                 }
@@ -212,10 +217,10 @@ define([
                             }
                         });
 
-                        pc = layers[0].getTilePos(player.x, player.y);
-                        context.drawImage(player.imgs[1], pc.x, pc.y - 16);
-                        context.drawImage(player.imgs[2], pc.x - 16, pc.y - 8);
-                        context.drawImage(player.imgs[3], pc.x + 16, pc.y - 8);
+                        //pc = layers[0].getTilePos(player.x, player.y);
+                        //context.drawImage(player.imgs[1], pc.x, pc.y - 16);
+                        //context.drawImage(player.imgs[2], pc.x - 16, pc.y - 8);
+                        //context.drawImage(player.imgs[3], pc.x + 16, pc.y - 8);
 
                         !hasFinished && requestAnimationFrame(render);
                     }
@@ -283,7 +288,7 @@ define([
                                 lastNonWallLevel = curLevel;
                                 lastTileWasNotWall = false;
                                 while (layers[curLevel + 1]) {
-                                    if (layers[curLevel + 1].getTile(nextX, nextY) >= 0) {
+                                    if (level.layers[curLevel + 1].visible && layers[curLevel + 1].getTile(nextX, nextY) >= 0) {
                                         lastTileWasNotWall = tileIsNotWall(curLevel + 1, level, nextX, nextY) && sameType(player.level, player.x, player.y, curLevel + 1, nextX, nextY, layers);
                                         if (lastTileWasNotWall) {
                                             lastNonWallLevel = curLevel + 1;
@@ -297,10 +302,13 @@ define([
                                 }
                             }
                             if (shouldMove) {
+                                if ((player.x != nextX) || (player.y != nextY) || (player.level != nextLevel)) {
+                                    playStep();
+                                }
+
                                 player.x = nextX;
                                 player.y = nextY;
                                 player.level = nextLevel;
-                                playStep();
                             } else {
                                 playWall();
                             }
@@ -319,12 +327,23 @@ define([
                             }
 
                             if (
-                                layers[player.level].getTile(player.x, player.y) === getTilesByType(level, 'button')[0]
+                                layers[player.level].getTile(player.x, player.y) === getTilesByType(level, 'button1')[0]
+                            ) {
+                                switch (levelFile) {
+                                    case 'res/maps/level2.json':
+                                        level.layers[3].visible = true;
+                                        console.log('push da button1');
+                                        playButton();
+                                        break;
+                                }
+                            }
+                            if (
+                                layers[player.level].getTile(player.x, player.y) === getTilesByType(level, 'button2')[0]
                             ) {
                                 switch (levelFile) {
                                     case 'res/maps/level2.json':
                                         level.layers[4].visible = true;
-                                        console.log('push da button');
+                                        console.log('push da button2');
                                         playButton();
                                         break;
                                 }
@@ -441,10 +460,12 @@ define([
                                     }
                                 }
                                 if (shouldMove) {
+                                    if ((player.x != nextX) || (player.y != nextY) || (player.level != nextLevel)) {
+                                        playStep();
+                                    }
                                     player.x = nextX;
                                     player.y = nextY;
                                     player.level = nextLevel;
-                                    playStep();
                                 } else {
                                     playWall();
                                 }
