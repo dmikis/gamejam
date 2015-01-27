@@ -145,7 +145,13 @@ define([
                             tileHeight: level.tileheight,
                             width: layer.width,
                             height: layer.height,
-                            type: layer.type
+                            type: layer.type,
+                            lightmap: [],
+                            shadowDistance: {
+                                color: '0, 0, 33',
+                                distance: 7,
+                                darkness: 0.95
+                            }
                         });
 
                         l.flip("horizontal");
@@ -182,15 +188,17 @@ define([
                             }
                             for (var x = 0; x < level.width; ++x) {
                                 for (var y = 0; y < level.height; ++y) {
-                                    if (i > player.level && layer.getTile(player.x, player.y) >= 0) {
+                                    if (i > player.level) {// && layer.getTile(player.x, player.y) >= 0) {
                                         if (x === player.x && y === player.y) {
-                                            context.globalAlpha = 0.3;
+                                            context.globalAlpha = 0.0;
                                         } else if (Math.abs(x - player.x) + Math.abs(y - player.y) === 1) {
                                             context.globalAlpha = 0.5;
                                         } else if (Math.abs(x - player.x) === 1 && Math.abs(y - player.y) === 1) {
                                             context.globalAlpha = 0.7;
                                         }
                                     }
+                                    if ((x === player.x) && (y === player.y))
+                                        layer.setLight(x, y);
                                     layer.draw(x, y);
                                     context.globalAlpha = 1;
                                 }
@@ -216,7 +224,7 @@ define([
 
                     input.keyboard(function (key, pressed, e) {
                         if (hasFinished)
-                        return;
+                            return;
                         if (pressed) {
                             var nextX = player.x, nextY = player.y;
 
@@ -246,7 +254,7 @@ define([
                                     curLevel = player.level;
                                     var xraySuccess = false;
                                     while (layers[curLevel + variation]) {
-                                        if (level.layers[curLevel].visible && layers[curLevel + variation].getTile(nextX, nextY) >= 0) {
+                                        if (level.layers[curLevel + variation].visible && layers[curLevel + variation].getTile(nextX, nextY) >= 0) {
                                             if (tileIsNotWall(curLevel + variation, level, nextX, nextY)) {
                                                 if (tileIsNotNoXRay(curLevel + variation, level, nextX, nextY)) {
                                                     player.level = curLevel + variation;
