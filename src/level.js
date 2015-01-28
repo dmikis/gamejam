@@ -180,6 +180,7 @@ define([
                     function render() {
                         context.clearRect(0, 0, 900, 600);
 
+                        var playerLayer = layers[player.level];
                         layers.forEach(function (layer, i) {
                             if (i === player.level + 1) {
                                 var pc = layers[0].getTilePos(player.x, player.y);
@@ -193,7 +194,7 @@ define([
                             }
                             for (var x = 0; x < level.width; ++x) {
                                 for (var y = 0; y < level.height; ++y) {
-                                    if (i > player.level) {// && layer.getTile(player.x, player.y) >= 0) {
+                                    if ((i > player.level) && playerLayer.getTile(x, y) >= 0) {// && layer.getTile(player.x, player.y) >= 0) {
                                         if (x === player.x && y === player.y) {
                                             context.globalAlpha = 0.3;
                                         } else if (Math.abs(x - player.x) + Math.abs(y - player.y) === 1) {
