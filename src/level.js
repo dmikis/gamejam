@@ -212,6 +212,7 @@ define([
 
                             if (i <= player.level) {
                                 pc = layers[0].getTilePos(player.x, player.y);
+                                context.drawImage(player.imgs[0], pc.x, pc.y);
                                 context.drawImage(player.imgs[1], pc.x, pc.y - 16);
                                 context.drawImage(player.imgs[2], pc.x - 16, pc.y - 8);
                                 context.drawImage(player.imgs[3], pc.x + 16, pc.y - 8);
